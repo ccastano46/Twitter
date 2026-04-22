@@ -37,6 +37,13 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Post> posts;
 
+    /**
+     * Constructs a new User.
+     *
+     * @param auth0Id  the unique Auth0 identifier for the user
+     * @param email    the user's email address
+     * @param username the user's chosen username
+     */
     public User(String auth0Id, String email, String username) {
         this.auth0Id = auth0Id;
         this.email = email;
