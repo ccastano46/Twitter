@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "POST")
+@Table(name = "POSTS")
 @Getter
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -30,7 +30,7 @@ public class Post {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @ManyToOne
-    @JoinColumn(name = "USER", nullable = false)
+    @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
