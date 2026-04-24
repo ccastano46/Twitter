@@ -6,6 +6,8 @@ import eci.arem.twitter.model.User;
 import eci.arem.twitter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,13 +24,23 @@ public class UserController {
 
     /**
      * Registers a new user in the system.
+     * The Auth0 ID is automatically extracted from the JWT token.
      *
-     * @param user the {@link User} entity containing registration details
+     * @param jwt      the JWT token containing the authenticated user's Auth0 ID
+     * @param username the desired username for the new account
+     * @param email    the email address of the new user
      * @return a {@link ResponseEntity} containing the created {@link User} with HTTP 201 Created
      * @throws TwitterException if the email or username is already registered
      */
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user) throws TwitterException {
+    public ResponseEntity<User> registerUser(
+            @AuthenticationPrincipal Jwt jwt,
+            @RequestParam String username,
+            @RequestParam String email) throws TwitterException {
+
+        String auth0Id = jwt.getSubject();
+
+        User user = new User(auth0Id, email, username);
         return ResponseEntity.status(201).body(userService.registerUser(user));
     }
 
