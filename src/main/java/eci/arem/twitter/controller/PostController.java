@@ -9,6 +9,8 @@ import eci.arem.twitter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,10 +42,11 @@ public class PostController {
      */
     @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Post> createPost(
+            @AuthenticationPrincipal Jwt jwt,
             @RequestParam("content") String content,
-            @RequestPart(value = "images", required = false) List<MultipartFile> images,
-            @RequestParam String auth0Id) throws TwitterException, IOException {
+            @RequestPart(value = "images", required = false) List<MultipartFile> images) throws TwitterException, IOException {
 
+        String auth0Id = jwt.getSubject();
         User user = userService.findByAuth0Id(auth0Id);
         Post post = postService.createPost(content, images, user);
         return ResponseEntity.ok(post);

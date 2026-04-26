@@ -1,5 +1,6 @@
 package eci.arem.twitter.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -35,6 +36,7 @@ public class User {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Post> posts;
 
     /**

@@ -34,7 +34,7 @@ public class Post {
     private User user;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Size(min = 1, max = 3)
+    @Size(max = 3)
     private List<PostImage> images;
 
     /**

@@ -1,8 +1,10 @@
 package eci.arem.twitter.controller;
 
 
+import eci.arem.twitter.dto.RegisterRequest;
 import eci.arem.twitter.exception.TwitterException;
 import eci.arem.twitter.model.User;
+import eci.arem.twitter.service.Auth0Service;
 import eci.arem.twitter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,34 +17,36 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final Auth0Service auth0Service;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, Auth0Service auth0Service) {
         this.userService = userService;
+        this.auth0Service = auth0Service;
     }
-
 
     /**
      * Registers a new user in the system.
-     * The Auth0 ID is automatically extracted from the JWT token.
+     * Creates the user in Auth0 and saves them in the database.
      *
-     * @param jwt      the JWT token containing the authenticated user's Auth0 ID
-     * @param username the desired username for the new account
-     * @param email    the email address of the new user
+     * @param request the registration details (username, email, password)
      * @return a {@link ResponseEntity} containing the created {@link User} with HTTP 201 Created
      * @throws TwitterException if the email or username is already registered
      */
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(
-            @AuthenticationPrincipal Jwt jwt,
-            @RequestParam String username,
-            @RequestParam String email) throws TwitterException {
-
-        String auth0Id = jwt.getSubject();
-
-        User user = new User(auth0Id, email, username);
-        return ResponseEntity.status(201).body(userService.registerUser(user));
+            @RequestBody RegisterRequest request) throws TwitterException {
+        try {
+            String auth0Id = auth0Service.createUser(request.getEmail(), request.getPassword());
+            User user = new User(auth0Id, request.getEmail(), request.getUsername());
+            return ResponseEntity.status(201).body(userService.registerUser(user));
+        } catch (TwitterException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new TwitterException(e.getMessage());
+        }
     }
+
 
 
     /**
@@ -53,7 +57,8 @@ public class UserController {
      * @throws TwitterException if no user is found with the provided Auth0 ID
      */
     @GetMapping("/me")
-    public ResponseEntity<User> getMe(@RequestParam String auth0Id) throws TwitterException {
+    public ResponseEntity<User> getMe(@AuthenticationPrincipal Jwt jwt) throws TwitterException {
+        String auth0Id = jwt.getSubject();
         return ResponseEntity.ok(userService.findByAuth0Id(auth0Id));
     }
 

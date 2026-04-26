@@ -26,8 +26,9 @@ public class SecurityConfig {
     private String domain;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .cors(cors -> {})
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         // Swagger
@@ -39,17 +40,15 @@ public class SecurityConfig {
                         ).permitAll()
                         // Public endpoints
                         .requestMatchers(HttpMethod.GET, "/posts/stream").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/posts/user").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/posts/user").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/user/register").permitAll()
                         // Protected endpoints
                         .requestMatchers(HttpMethod.GET, "/user/me")
-                            .hasAnyAuthority("SCOPE_read:profile")
-                        .requestMatchers(HttpMethod.POST, "/user/register")
-                            .hasAnyAuthority("SCOPE_write:profile")
+                        .hasAnyAuthority("SCOPE_read:profile")
                         .requestMatchers(HttpMethod.POST, "/posts/create")
-                            .hasAnyAuthority("SCOPE_write:posts")
+                        .hasAnyAuthority("SCOPE_write:posts")
                         .requestMatchers(HttpMethod.GET, "/user/users/**")
-                            .hasAnyAuthority("SCOPE_read:profile")
-                        // The rest has to be authenticated
+                        .hasAnyAuthority("SCOPE_read:profile")
                         .anyRequest().authenticated()
                 )
                 .formLogin(AbstractHttpConfigurer::disable)

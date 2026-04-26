@@ -63,6 +63,7 @@ public class PostService {
         );
         return fileName;
     }
+
     /**
      * Generates a temporary presigned URL for accessing an image stored in S3.
      * The URL is valid for 15 minutes.
@@ -90,29 +91,23 @@ public class PostService {
      * @throws IOException      if an error occurs during image upload to S3
      */
     public Post createPost(String content, List<MultipartFile> images, User user) throws TwitterException, IOException {
-        // Validates 3 iamges per post.
         if (images != null && images.size() > 3) {
             throw new TwitterException(TwitterException.THREE_IMAGES);
         }
 
         Post post = new Post(content, user);
-
+        postRepository.save(post); // Primero guarda el post para que tenga ID
 
         if (images != null) {
-
             for (int i = 0; i < images.size(); i++) {
                 String imageKey = uploadImage(images.get(i));
-                PostImage postImage = new PostImage(
-                        imageKey,
-                        i + 1,
-                        post
-                        );
+                PostImage postImage = new PostImage(imageKey, i + 1, post);
                 post.addImage(postImage);
             }
             postImageRepository.saveAll(post.getImages());
         }
 
-        return postRepository.save(post);
+        return postRepository.save(post); // Actualiza con las imágenes
     }
 
     /**
@@ -130,7 +125,7 @@ public class PostService {
      * @param user the {@link User} whose posts are to be retrieved
      * @return a list of {@link Post} entities authored by the given user, newest first
      */
-    public List<Post> streamByUser (User user){
+    public List<Post> streamByUser(User user) {
         return postRepository.findByUserOrderByCreatedAtDesc(user);
     }
 
@@ -142,5 +137,4 @@ public class PostService {
     public void setPostImageUrl(PostImage image) {
         image.setPresignedUrl(generatePresignedUrl(image.getImageKey()));
     }
-
 }

@@ -1,5 +1,6 @@
 package eci.arem.twitter.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,6 +29,7 @@ public class PostImage {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post", nullable = false)
+    @JsonIgnore
     private Post post;
 
     /**
