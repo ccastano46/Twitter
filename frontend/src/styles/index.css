@@ -1,0 +1,740 @@
+/* ============================================
+   MOBILE-FIRST CSS ARCHITECTURE
+   Twitter Clone - Responsive Design System
+   ============================================ */
+
+/* ============================================
+   1. RESET & BASE STYLES
+   ============================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ============================================
+   2. CSS VARIABLES (Design System)
+   ============================================ */
+
+:root {
+  /* Colors */
+  --color-primary: #000000;
+  --color-primary-light: #ffffff;
+  --color-border: #e5e7eb;
+  --color-bg-hover: #f9fafb;
+  --color-bg-input: #f3f4f6;
+  --color-text-primary: #111827;
+  --color-text-secondary: #6b7280;
+  --color-text-placeholder: #9ca3af;
+  --color-danger: #ef4444;
+  --color-warning: #f97316;
+  --color-danger-bg: #fef2f2;
+
+  /* Spacing - Mobile First (scales up with breakpoints) */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 20px;
+  --spacing-2xl: 24px;
+  --spacing-3xl: 30px;
+  --spacing-4xl: 48px;
+
+  /* Typography - Mobile First */
+  --font-family-base: sans-serif;
+  --font-size-xs: 13px;
+  --font-size-sm: 14px;
+  --font-size-base: 15px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-2xl: 28px;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 999px;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.2s ease;
+
+  /* Container widths */
+  --container-max-width: 600px;
+  --container-padding: var(--spacing-lg);
+}
+
+/* ============================================
+   3. HTML & BODY - Mobile First
+   ============================================ */
+
+html, body {
+  height: 100%;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  padding: var(--spacing-lg);
+}
+
+#root {
+  height: 100%;
+}
+
+/* ============================================
+   4. GLOBAL ELEMENTS - Mobile First
+   ============================================ */
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-weight: var(--font-weight-semibold);
+  transition: all var(--transition-base);
+}
+
+/* ============================================
+   5. NAVIGATION - Mobile First
+   ============================================ */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: var(--color-primary-light);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--spacing-xl);
+}
+
+.nav-container {
+  padding: var(--spacing-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-shrink: 0;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+/* Avatar Styles */
+.nav-user-avatar {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  color: var(--color-primary-light) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  padding: 0 !important;
+  flex-shrink: 0;
+}
+
+/* Navigation Buttons */
+.nav-btn,
+.nav-btn-login,
+.nav-btn-logout {
+  background-color: var(--color-primary);
+  color: var(--color-primary-light);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.nav-btn:hover,
+.nav-btn-login:hover,
+.nav-btn-logout:hover {
+  opacity: 0.8;
+}
+
+/* Tablet: Show more spacing in nav */
+@media (min-width: 768px) {
+  .nav-container {
+    padding: var(--spacing-xl);
+  }
+
+  .nav-links {
+    gap: var(--spacing-lg);
+  }
+}
+
+/* ============================================
+   6. BUTTONS - Mobile First
+   ============================================ */
+
+button {
+  background-color: var(--color-primary);
+  color: var(--color-primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+button:hover {
+  opacity: 0.85;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Secondary Button */
+button.secondary-btn {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+button.secondary-btn:hover {
+  background-color: var(--color-bg-hover);
+}
+
+/* ============================================
+   7. FORMS & CARDS - Mobile First
+   ============================================ */
+
+.card-form {
+  width: 100%;
+  max-width: var(--container-max-width);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  margin: 0 auto;
+}
+
+/* Form Header */
+.card-form .header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  text-align: center;
+}
+
+.card-form .header h1 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.card-form .header p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* Form Container */
+.card-form .container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+/* Form Inputs */
+.card-form .container input {
+  width: 100%;
+  padding: var(--spacing-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  background-color: var(--color-bg-input);
+  color: var(--color-text-primary);
+  outline: none;
+  transition: border-color var(--transition-base), background-color var(--transition-base);
+}
+
+.card-form .container input:focus {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-light);
+}
+
+.card-form .container input::placeholder {
+  color: var(--color-text-placeholder);
+}
+
+/* Form Submit Button */
+.card-form .container button {
+  width: 100%;
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  margin-top: var(--spacing-sm);
+}
+
+/* Tablet: Increase padding and spacing */
+@media (min-width: 768px) {
+  .card-form {
+    padding: var(--spacing-2xl);
+    gap: var(--spacing-2xl);
+  }
+
+  .card-form .header h1 {
+    font-size: 32px;
+  }
+}
+
+/* ============================================
+   8. HOME CONTAINER - Mobile First
+   ============================================ */
+
+.home-container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.home-loading,
+.home-empty {
+  text-align: center;
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-4xl);
+  font-size: var(--font-size-base);
+  padding: var(--spacing-xl);
+}
+
+/* ============================================
+   9. POST CARD - Mobile First
+   ============================================ */
+
+.post-card {
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  transition: background-color var(--transition-fast);
+}
+
+.post-card:hover {
+  background-color: var(--color-bg-hover);
+}
+
+/* Post Header */
+.post-header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+}
+
+.post-avatar {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  color: var(--color-primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  flex-shrink: 0;
+}
+
+.post-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  flex: 1;
+  min-width: 0;
+}
+
+.post-username {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  word-break: break-word;
+}
+
+.post-time {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+/* Post Content */
+.post-content {
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+/* Post Images - Mobile First (single column) */
+.post-images {
+  display: grid;
+  gap: var(--spacing-xs);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  width: 100%;
+}
+
+.post-images-1 {
+  grid-template-columns: 1fr;
+}
+
+.post-images-2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.post-images-3 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+}
+
+.post-images-3 .post-image:first-child {
+  grid-column: span 2;
+}
+
+.post-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+/* Tablet: Adjust image height */
+@media (min-width: 768px) {
+  .post-image {
+    height: 300px;
+  }
+}
+
+/* Post Actions */
+.post-actions {
+  display: flex;
+  gap: var(--spacing-2xl);
+  margin-top: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.post-action-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background: none !important;
+  color: var(--color-text-secondary) !important;
+  padding: var(--spacing-sm) var(--spacing-md) !important;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal) !important;
+  transition: color var(--transition-base), background-color var(--transition-base);
+}
+
+.post-action-btn:hover {
+  color: var(--color-danger) !important;
+  background-color: var(--color-danger-bg) !important;
+}
+
+/* ============================================
+   10. CREATE POST FORM - Mobile First
+   ============================================ */
+
+.create-post-form {
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--spacing-lg);
+}
+
+.create-post-inner {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.create-post-avatar {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  color: var(--color-primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  flex-shrink: 0;
+}
+
+.create-post-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  min-width: 0;
+}
+
+/* Textarea */
+.create-post-textarea {
+  width: 100%;
+  min-height: 60px;
+  max-height: 200px;
+  font-size: var(--font-size-xl);
+  color: var(--color-text-primary);
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  line-height: 1.5;
+  font-family: var(--font-family-base);
+}
+
+.create-post-textarea::placeholder {
+  color: var(--color-text-placeholder);
+}
+
+/* Image Previews - Mobile First (single column) */
+.create-post-previews {
+  display: grid;
+  gap: var(--spacing-xs);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  width: 100%;
+}
+
+.create-post-previews-1 {
+  grid-template-columns: 1fr;
+}
+
+.create-post-previews-2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.create-post-previews-3 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+}
+
+.create-post-previews-3 .create-post-preview:first-child {
+  grid-column: span 2;
+}
+
+.create-post-preview {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+.create-post-preview img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+
+.create-post-remove-img {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  color: var(--color-primary-light) !important;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-sm);
+  transition: background-color var(--transition-base);
+}
+
+.create-post-remove-img:hover {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Footer */
+.create-post-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--spacing-md);
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.create-post-img-btn {
+  background: none !important;
+  color: var(--color-primary) !important;
+  padding: var(--spacing-md) !important;
+  border-radius: 50%;
+  transition: background-color var(--transition-base);
+  flex-shrink: 0;
+}
+
+.create-post-img-btn:hover {
+  background-color: var(--color-bg-input) !important;
+}
+
+.create-post-img-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.create-post-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.create-post-char-count {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+.create-post-char-count.warning {
+  color: var(--color-warning);
+}
+
+.create-post-char-count.danger {
+  color: var(--color-danger);
+}
+
+.create-post-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  background-color: var(--color-primary) !important;
+  color: var(--color-primary-light) !important;
+  padding: var(--spacing-sm) var(--spacing-lg) !important;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  transition: opacity var(--transition-base);
+  white-space: nowrap;
+}
+
+.create-post-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Tablet: Increase padding and spacing */
+@media (min-width: 768px) {
+  .create-post-form {
+    padding: var(--spacing-xl);
+  }
+
+  .create-post-inner {
+    gap: var(--spacing-lg);
+  }
+
+  .create-post-textarea {
+    font-size: var(--font-size-xl);
+  }
+
+  .create-post-preview img {
+    height: 200px;
+  }
+}
+
+/* ============================================
+   11. RESPONSIVE BREAKPOINTS
+   ============================================ */
+
+/* Tablet (768px+) */
+@media (min-width: 768px) {
+  :root {
+    --spacing-lg: 20px;
+    --spacing-xl: 24px;
+    --container-padding: var(--spacing-xl);
+  }
+
+  body {
+    padding: var(--spacing-xl);
+  }
+
+  .home-container {
+    max-width: 700px;
+  }
+}
+
+/* Desktop (992px+) */
+@media (min-width: 992px) {
+  :root {
+    --spacing-lg: 24px;
+    --spacing-xl: 30px;
+  }
+
+  body {
+    padding: var(--spacing-2xl);
+  }
+
+  .home-container {
+    max-width: 800px;
+  }
+}
+
+/* Large Desktop (1200px+) */
+@media (min-width: 1200px) {
+  :root {
+    --spacing-lg: 28px;
+    --spacing-xl: 32px;
+  }
+}

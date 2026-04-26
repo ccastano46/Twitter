@@ -1,0 +1,30 @@
+{
+  "name": "aremtwiiter",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "vite": "^8.0.10"
+  },
+  "dependencies": {
+    "@auth0/auth0-react": "^2.16.2",
+    "date-fns": "^4.1.0",
+    "lucide-react": "^1.11.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sonner": "^2.0.7",
+    "wouter": "^3.9.0"
+  },
+  "resolutions": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  }
+}
